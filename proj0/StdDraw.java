@@ -1641,6 +1641,9 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
         }
     }
 
+    public static void picture(String s) {
+    }
+
 
     /**
      * This method cannot be called directly.
