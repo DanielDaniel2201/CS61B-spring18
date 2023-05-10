@@ -1,10 +1,12 @@
 public class NBody {
+	//returns the radius of the universe.
 	public static double readRadius(String file_name) {
 		In in = new In(file_name);
 		int N = in.readInt();
 		return in.readDouble();
 	}
 
+	//returns an array of Planet object.
 	public static Planet[] readPlanets(String file_name) {
 		In in = new In(file_name);
 		int N = in.readInt();
@@ -35,15 +37,17 @@ public class NBody {
 			double[] xForces = new double[N];
 			double[] yForces = new double[N];
 
+			//Calculate the net x and y forces for each planet, storing these in the xForces and yForces arrays respectively.
 			for (int i = 0; i < N; i += 1) {
 				xForces[i] = Planets[i].calcNetForceExertedByX(Planets);
 				yForces[i] = Planets[i].calcNetForceExertedByY(Planets);
 			}
-
+			//updates each planet’s position, velocity, and acceleration.
 			for (int i = 0; i < N; i += 1) {
 				Planets[i].update(dt, xForces[i], yForces[i]);
 			}
 
+			//draws the universe and the planets on the offscreen canvas.
 			StdDraw.setScale(-r, r);
 			StdDraw.picture(0, 0, "images/starfield.jpg");
 			StdDraw.enableDoubleBuffering();
@@ -52,6 +56,7 @@ public class NBody {
 				p.draw();
 			}
 
+			//shows what is drawn on the offscreen canvas.
 			StdDraw.show();
 
 			StdDraw.pause(10);
@@ -66,5 +71,8 @@ public class NBody {
 					Planets[i].xxPos, Planets[i].yyPos, Planets[i].xxVel,
 					Planets[i].yyVel, Planets[i].mass, Planets[i].imgFileName);
 		}
+		//here are many more universes provided in the skeleton other than planets.txt.
+		//You can find them in the data folder,
+		//e.g. java NBody 20000000 20000 ./data/suninterference.txt.
 	}
 }

@@ -7,6 +7,7 @@ public class Planet {
 	public String imgFileName;
 	public static final double G = 6.67e-11;
 
+	// Planet constructor
 	public Planet(double xP, double yP, double xV,
               double yV, double m, String img) {
 		xxPos = xP;
@@ -17,6 +18,7 @@ public class Planet {
 		imgFileName = img;
 	}
 
+	//the second Planet constructor
 	public Planet(Planet p) {
 		xxPos = p.xxPos;
 		yyPos = p.yyPos;
@@ -26,25 +28,30 @@ public class Planet {
 		imgFileName = p.imgFileName;
 	}
 
+	//calculates the distance between this planet and the planet p passed in.
 	public double calcDistance (Planet p) {
 		double dx = p.xxPos - this.xxPos;
 		double dy = p.yyPos - this.yyPos;
 		return Math.sqrt(dx * dx + dy * dy);
 	}
 
+	//takes in a planet, and returns a double describing the force exerted on this planet by the given planet.
 	public double calcForceExertedBy (Planet p) {
 		double distance = this.calcDistance(p);
 		return G * this.mass * p.mass / (distance * distance);
 	}
 
+	//takes in a planet, and returns the exerted force in x direction.
 	public double calcForceExertedByX (Planet p) {
 		return this.calcForceExertedBy(p) * (p.xxPos - this.xxPos) / this.calcDistance(p);
 	}
 
+	//takes in a planet, and returns the exerted force in y direction.
 	public double calcForceExertedByY (Planet p) {
 		return this.calcForceExertedBy(p) * (p.yyPos - this.yyPos) / this.calcDistance(p);
 	}
 
+	//takes in an array of Planets and calculate the net X force exerted by all planets in that array upon the current Planet.
 	public double calcNetForceExertedByX (Planet[] array) {
 		double sum = 0;
 		for (Planet p: array) {
@@ -56,6 +63,7 @@ public class Planet {
 		} return sum;
 	}
 
+	//takes in an array of Planets and calculate the net Y force exerted by all planets in that array upon the current Planet.
 	public double calcNetForceExertedByY (Planet[] array) {
 		double sum = 0;
 		for (Planet p: array) {
@@ -67,6 +75,7 @@ public class Planet {
 		} return sum;
 	}
 
+	//takes a dt, net force exerted in two directions, and updates the planet's state
 	public void update(double dt, double fX, double fY) {
 		double accelerationX = fX / this.mass;
 		double accelerationY = fY / this.mass;
@@ -76,7 +85,8 @@ public class Planet {
 		this.yyPos = this.yyPos + dt * this.yyVel;
 	}
 
-	public void draw() {
+	//draws this planet on the offscreen canvas, and does not display anything until StdDraw.show() is called.
+	public void draw(){
 		StdDraw.picture(xxPos, yyPos, "images/" + imgFileName);
 	}
 }
