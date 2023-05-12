@@ -21,14 +21,6 @@ public class LinkedListDeque<T> {
         }
     }
 
-    /*Creates a deque with a given value*/
-    public LinkedListDeque(T x) {
-        sentinel = new StuffNode(null,  null);
-        sentinel.prev = new StuffNode(sentinel, x, sentinel);
-        sentinel.next = sentinel.prev;
-        this.size = 1;
-    }
-
     /*Creates an empty linked list deque.*/
     public LinkedListDeque() {
         this.size = 0;
@@ -60,8 +52,8 @@ public class LinkedListDeque<T> {
         } else {
             T rst = this.sentinel.next.item;
             this.size -= 1;
-            sentinel.next = sentinel.next.next;
             sentinel.next.next.prev = sentinel;
+            sentinel.next = sentinel.next.next;
             return rst;
         }
     }
@@ -73,8 +65,8 @@ public class LinkedListDeque<T> {
         } else {
             T rst = this.sentinel.prev.item;
             this.size -= 1;
-            sentinel.prev = sentinel.prev.prev;
             sentinel.prev.prev.next = sentinel;
+            sentinel.prev = sentinel.prev.prev;
             return rst;
         }
     }
