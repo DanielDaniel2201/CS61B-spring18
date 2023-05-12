@@ -1,8 +1,8 @@
 public class ArrayDeque<T> {
-    public int size;
-    public T[] items;
-    public int nextFirst;
-    public int nextLast;
+    private int size;
+    private T[] items;
+    private int nextFirst;
+    private int nextLast;
 
     public ArrayDeque() {
         items = (T []) new Object[8];
@@ -11,7 +11,7 @@ public class ArrayDeque<T> {
         nextLast = 1;
     }
 
-    public void resize(int factor) {
+    private void resize(int factor) {
         T[] a = (T []) new Object[factor];
         System.arraycopy(items, 0, a, 0, size);
         items = a;
@@ -46,10 +46,11 @@ public class ArrayDeque<T> {
         }
     }
 
-    public void usage() {
+    private void usage() {
         T[] a = (T []) new Object[4 * size];
         System.arraycopy(items, 0, a, 0, nextLast);
-        System.arraycopy(items, nextFirst + 1, a, 4 * size - items.length + nextFirst, items.length);
+        System.arraycopy(items, nextFirst + 1,
+                a, 4 * size - items.length + nextFirst, items.length);
         items = a;
     }
     public T removeLast() {
@@ -89,7 +90,7 @@ public class ArrayDeque<T> {
 
     public void printDeque() {
         for (int i = 0; i <= size; i += 1) {
-            if (items[i] != null){
+            if (items[i] != null) {
                 System.out.println(items[i]);
             }
         }

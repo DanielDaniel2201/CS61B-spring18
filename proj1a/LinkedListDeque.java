@@ -1,11 +1,11 @@
 public class LinkedListDeque<T> {
-    public int size;
-    public StuffNode sentinel;
+    private int size;
+    private StuffNode sentinel;
     /*The list now has 2 links for every node.*/
-    public class StuffNode {
-        public StuffNode prev;
-        public T item;
-        public StuffNode next;
+    private class StuffNode {
+        private StuffNode prev;
+        private T item;
+        private StuffNode next;
 
         /*Constructor for StuffNode*/
         public StuffNode(StuffNode p, T x, StuffNode n) {
@@ -30,7 +30,7 @@ public class LinkedListDeque<T> {
     }
 
     /*Creates an empty linked list deque.*/
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         this.size = 0;
         sentinel = new StuffNode(null, null);
         sentinel.next = sentinel;
@@ -40,23 +40,17 @@ public class LinkedListDeque<T> {
     /*Adds an item of type T to the front of the deque.*/
     public void addFirst(T x) {
         this.size += 1;
-        StuffNode S = sentinel.next;
-        StuffNode TMP = new StuffNode(null, x, null);
-        TMP.prev = sentinel;
-        sentinel.next = TMP;
-        S.prev = TMP;
-        TMP.next = S;
+        StuffNode n = new StuffNode(sentinel, x, sentinel.next);
+        sentinel.next.prev = n;
+        sentinel.next = n;
     }
 
     /*Adds an item of type T to the back of the deque.*/
     public void addLast(T x) {
         this.size += 1;
-        StuffNode S = sentinel.prev;
-        StuffNode TMP = new StuffNode(null, x, null);
-        TMP.next = sentinel;
-        sentinel.prev = TMP;
-        S.next = TMP;
-        TMP.prev = S;
+        StuffNode n = new StuffNode(sentinel.prev, x, sentinel);
+        sentinel.prev.next = n;
+        sentinel.prev = n;
     }
 
     /*Removes the first item of the list.*/
@@ -99,17 +93,17 @@ public class LinkedListDeque<T> {
     }
 
     /*Same as get but recursively.*/
-    private T getRecursive(StuffNode p, int i) {
+    private T getRecursiveHelp(StuffNode p, int i) {
         if (i == 0) {
-            return p.next.item;
+            return p.item;
         }
-        return getRecursive(p.next, i - 1);
+        return getRecursiveHelp(p.next, i - 1);
     }
     public T getRecursive(int index) {
-        if (index < 0 || index >= this.size){
+        if (index < 0 || index >= this.size) {
             return null;
         }
-        return getRecursive(sentinel, index);
+        return getRecursiveHelp(sentinel.next, index);
     }
 
     /*Returns true if deque is empty, false otherwise.*/
