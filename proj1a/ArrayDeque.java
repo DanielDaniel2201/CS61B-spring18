@@ -4,6 +4,13 @@ public class ArrayDeque<T> {
     private int nextFirst;
     private int nextLast;
 
+    public ArrayDeque() {
+        size = 0;
+        array = (T []) new Object[8];
+        nextFirst = 0;
+        nextLast = 1;
+    }
+
     public int size() {
         return size;
     }
