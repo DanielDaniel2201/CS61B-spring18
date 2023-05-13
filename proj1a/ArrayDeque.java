@@ -19,6 +19,17 @@ public class ArrayDeque<T> {
         return size == 0;
     }
 
+    private boolean isFull() {
+        return size == array.length;
+    }
+
+    /**
+     * Whether to downsize the deque.
+     */
+    private boolean isSparse() {
+        return array.length >= 16 && size < (array.length / 4);
+    }
+
     private int minusOne(int f) {
         return (f - 1 + array.length) % array.length;
     }
@@ -46,7 +57,7 @@ public class ArrayDeque<T> {
         resize(size * 4);
     }
     public void addFirst(T x) {
-        if (size == array.length) {
+        if (isFull()) {
             upSize();
         }
         array[nextFirst] = x;
@@ -55,7 +66,7 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T x) {
-        if (size == array.length) {
+        if (isFull()) {
             upSize();
         }
         array[nextLast] = x;
@@ -64,7 +75,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if (array.length > 16 && array.length / size > 4) {
+        if (isSparse()) {
             downSize();
         }
         nextFirst = plusOne(nextFirst);
@@ -77,7 +88,7 @@ public class ArrayDeque<T> {
     }
 
     public T removeLast() {
-        if (array.length > 16 && array.length / size > 4) {
+        if (isSparse()) {
             downSize();
         }
         nextLast = minusOne(nextLast);
