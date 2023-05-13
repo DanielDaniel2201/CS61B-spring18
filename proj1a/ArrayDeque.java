@@ -35,7 +35,7 @@ public class ArrayDeque<T> {
             oldindex = plusOne(oldindex);
         }
         array = newArray;
-        nextFirst = array.length - 1;
+        nextFirst = capacity - 1;
         nextLast = size;
     }
     private void upSize() {
