@@ -71,11 +71,11 @@ public class ArrayDeque<T> {
             return null;
         }
         size -= 1;
-        T rst = array[nextFirst];
         if (array.length > 16 && array.length / size >= 4) {
             shrink();
         }
         nextFirst = nextLastChange(nextFirst);
+        T rst = array[nextFirst];
         return rst;
     }
 
@@ -84,11 +84,11 @@ public class ArrayDeque<T> {
             return null;
         }
         size -= 1;
-        T rst = array[nextLast];
         if (array.length > 16 && array.length / size >= 4) {
             shrink();
         }
         nextLast = nextFirstChange(nextLast);
+        T rst = array[nextLast];
         return rst;
     }
 
