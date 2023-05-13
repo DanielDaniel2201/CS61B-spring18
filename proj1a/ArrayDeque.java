@@ -12,18 +12,18 @@ public class ArrayDeque<T> {
         return size == 0;
     }
 
-    private int nextFirstChange(int nextFirst) {
-        if (nextFirst == 0) {
+    private int nextFirstChange(int f) {
+        if (f == 0) {
             return array.length - 1;
         }
-        return nextFirst - 1;
+        return f - 1;
     }
 
-    private int nextLastChange(int nextLast) {
-        if (nextLast == array.length - 1) {
+    private int nextLastChange(int l) {
+        if (l == array.length - 1) {
             return 0;
         }
-        return nextLast + 1;
+        return l + 1;
     }
     private void enlarge() {
         T[] newArray = (T []) new Object[size * 2];
@@ -40,10 +40,9 @@ public class ArrayDeque<T> {
                 newArray, array.length - 1 - nextFirst, nextFirst + 1);
         array = newArray;
         nextFirst = nextFirst - (array.length - 4 * size - 1);
-
     }
     public void addFirst(T x) {
-        if (size == array.length) {
+        if (size == array.length - 1) {
             enlarge();
         }
         array[nextFirst] = x;
@@ -52,7 +51,7 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T x) {
-        if (size == array.length) {
+        if (size == array.length - 1) {
             enlarge();
         }
         array[nextLast] = x;
