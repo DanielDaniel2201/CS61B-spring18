@@ -64,31 +64,29 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if (size == 0) {
-            return null;
-        }
         if (array.length > 16 && array.length / size > 4) {
             downSize();
         }
-        size -= 1;
         nextFirst = plusOne(nextFirst);
-        T rst = array[nextFirst];
+        T toRemove = array[nextFirst];
         array[nextFirst] = null;
-        return rst;
+        if (!isEmpty()) {
+            size -= 1;
+        }
+        return toRemove;
     }
 
     public T removeLast() {
-        if (size == 0) {
-            return null;
-        }
         if (array.length > 16 && array.length / size > 4) {
             downSize();
         }
-        size -= 1;
         nextLast = minusOne(nextLast);
-        T rst = array[nextLast];
+        T toRemove = array[nextLast];
         array[nextLast] = null;
-        return rst;
+        if (!isEmpty()) {
+            size -= 1;
+        }
+        return toRemove;
     }
 
     public T get(int index) {
