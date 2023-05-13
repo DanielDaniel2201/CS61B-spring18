@@ -12,14 +12,14 @@ public class ArrayDeque<T> {
         return size == 0;
     }
 
-    public int nextFirstChange(int nextFirst) {
+    private int nextFirstChange(int nextFirst) {
         if (nextFirst == 0) {
             return array.length - 1;
         }
         return nextFirst - 1;
     }
 
-    public int nextLastChange(int nextLast) {
+    private int nextLastChange(int nextLast) {
         if (nextLast == array.length - 1) {
             return 0;
         }
@@ -33,7 +33,7 @@ public class ArrayDeque<T> {
         nextFirst = nextFirst + size;
     }
 
-    public void shrink() {
+    private void shrink() {
         T[] newArray = (T []) new Object[size * 4];
         System.arraycopy(array, 0, newArray, 0, nextLast);
         System.arraycopy(array, nextFirst + 1,
