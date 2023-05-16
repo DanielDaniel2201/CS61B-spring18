@@ -1,4 +1,4 @@
-import org.hamcrest.Condition;
+//import org.hamcrest.Condition;
 
 public class Palindrome {
 
