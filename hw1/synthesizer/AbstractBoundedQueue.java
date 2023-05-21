@@ -1,6 +1,5 @@
 package synthesizer;
 
-import synthesizer.BoundedQueue;
 
 public abstract class AbstractBoundedQueue<T> implements BoundedQueue<T> {
 
@@ -15,5 +14,4 @@ public abstract class AbstractBoundedQueue<T> implements BoundedQueue<T> {
     public int fillCount() {
         return fillCount;
     }
-
 }

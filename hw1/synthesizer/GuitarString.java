@@ -1,4 +1,4 @@
-package synthesizer;// TODO: Make sure to make this class a part of the synthesizer package
+package synthesizer; // TODO: Make sure to make this class a part of the synthesizer package
 //package <package name>;
 
 //Make sure this class is public
@@ -35,7 +35,7 @@ public class GuitarString {
         while (!buffer.isEmpty()) {
             buffer.dequeue();
         }
-        while(!buffer.isFull()) {
+        while (!buffer.isFull()) {
             double r = Math.random() - 0.5;
             buffer.enqueue(r);
         }
