@@ -48,8 +48,8 @@ public class Room {
             int y = RANDOM.nextInt(HEIGHT - 4);
             int tmp1 = Math.min(15, WIDTH - x);
             int tmp2 = Math.min(15, HEIGHT - y);
-            int w = RANDOM.nextInt(4, tmp1);
-            int l = RANDOM.nextInt(4, tmp2);
+            int w = RANDOM.nextInt(tmp1 - 4) + 4;
+            int l = RANDOM.nextInt(tmp2 - 4) + 4;
             if (Overlapping(x, y, w, l)) {
                 i -= 1;
                 continue;

@@ -40,7 +40,7 @@ public class HallwayVertical {
 
     //returns a position of special point 1 on an appropriate place of a room edge and on its way there will be a valid special point 2
     private static Position Sp1Pos() {
-        int x = RANDOM.nextInt(1, WIDTH - 2);
+        int x = RANDOM.nextInt(WIDTH - 3) + 1;
         int y = RANDOM.nextInt(HEIGHT - 2);
         return Purify1(x, y);
     }
@@ -75,7 +75,7 @@ public class HallwayVertical {
         if (var1 && var2 && var3 && var4 && var5) {
             return new Position(xInput, yInput);
         } else {
-            return Purify1(RANDOM.nextInt(1, WIDTH - 2), RANDOM.nextInt(HEIGHT - 2));
+            return Purify1(RANDOM.nextInt(WIDTH - 3) + 1, RANDOM.nextInt(HEIGHT - 2));
         }
     }
 
