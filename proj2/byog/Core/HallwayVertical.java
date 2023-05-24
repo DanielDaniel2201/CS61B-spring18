@@ -9,7 +9,7 @@ import java.util.Random;
 import static byog.Core.Game.*;
 public class HallwayVertical {
 
-    private static int RandomHallwaysNumber(int min, int max, Random RANDOM) {
+    private static int RandomHallwaysNumber(int min, int max) {
         int returnValue = RANDOM.nextInt(100);
         while (returnValue <= min || returnValue >= max) {
             returnValue = RANDOM.nextInt(100);
@@ -18,7 +18,7 @@ public class HallwayVertical {
     }
 
     public static void DrawRandomHallwaysVertical(TETile[][] world) {
-        int num = RandomHallwaysNumber(8, 15, RANDOM);
+        int num = RandomHallwaysNumber(5, 7);
         for (int i = 0; i < num; i += 1) {
             DrawRandomHallway(world);
         }

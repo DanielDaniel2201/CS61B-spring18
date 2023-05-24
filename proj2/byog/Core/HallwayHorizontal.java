@@ -19,7 +19,7 @@ public class HallwayHorizontal {
     }
 
     public static void DrawRandomHallways(TETile[][] world) {
-        int num = RandomHallwaysNumber(8, 15);
+        int num = RandomHallwaysNumber(5, 7);
         for (int i = 0; i < num; i += 1) {
             DrawRandomHallway(world);
         }
