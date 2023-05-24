@@ -2,12 +2,26 @@ package byog.Core;
 
 import byog.TileEngine.TERenderer;
 import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
+
+import java.util.Random;
+
+import static byog.Core.HallwayHorizontal.DrawRandomHallways;
+import static byog.Core.HallwayVertical.DrawRandomHallwaysVertical;
+import static byog.Core.Room.DrawRandomRooms;
 
 public class Game {
     TERenderer ter = new TERenderer();
     /* Feel free to change the width and height. */
     public static final int WIDTH = 80;
     public static final int HEIGHT = 30;
+    public static TETile outTile;
+    public static TETile inTile;
+    public static long SEED;
+    public static TETile[][] world = new TETile[WIDTH][HEIGHT];
+
+
+
 
     /**
      * Method used for playing a fresh game. The game should start from the main menu.
@@ -27,12 +41,24 @@ public class Game {
      * @param input the input string to feed to your program
      * @return the 2D TETile[][] representing the state of the world
      */
-    public TETile[][] playWithInputString(String input) {
+    public static TETile[][] playWithInputString(String input) {
         // TODO: Fill out this method to run the game using the input passed in,
         // and return a 2D tile representation of the world that would have been
         // drawn if the same inputs had been given to playWithKeyboard().
+        outTile = Tileset.WALL;
+        inTile = Tileset.FLOOR;
+        SEED =Long.parseLong(input);
+        Random RANDOM = new Random(SEED);
 
-        TETile[][] finalWorldFrame = null;
-        return finalWorldFrame;
+        for (int x = 0; x < WIDTH; x += 1) {
+            for (int y = 0; y < HEIGHT; y += 1) {
+                world[x][y] = Tileset.NOTHING;
+            }
+        }
+
+        DrawRandomRooms(world, new Room(outTile, inTile), RANDOM);
+        DrawRandomHallways(world, RANDOM);
+        DrawRandomHallwaysVertical(world, RANDOM);
+        return world;
     }
 }
