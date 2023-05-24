@@ -9,16 +9,14 @@ import java.util.Random;
 import static byog.Core.Game.*;
 
 public class Room {
-    public static TETile[][] world = Game.world;
-    public static TETile outTile;
-    public static TETile inTile;
 
-    public static void DRAW(TETile[][] world, Position Pos, int width, int height, TETile tile1, TETile tile2) {
-         Field.DRAW(world, Pos, width, height, tile1);
+
+    public static void DRAW(TETile[][] world, Position Pos, int width, int height) {
+         Field.DRAW(world, Pos, width, height, outTile);
          int xNew = Pos.x + 1;
          int yNew = Pos.y + 1;
          Position PosNew = new Position(xNew, yNew);
-         Field.DRAW(world, PosNew, width - 2, height - 2, tile2);
+         Field.DRAW(world, PosNew, width - 2, height - 2, inTile);
     }
 
     // returns a random number from a given range used for the number of rooms to be created
@@ -43,7 +41,7 @@ public class Room {
     }
 
     //a method to fill the 2d world with random number of rooms of random width and length
-    public static void DrawRandomRooms(TETile[][] WORLD, TETile tile1, TETile tile2) {
+    public static void DrawRandomRooms(TETile[][] WORLD) {
         int num = RandomRoomsNumber(15, 20, RANDOM);
         for (int i = 0; i < num; i += 1) {
             int x = RANDOM.nextInt(WIDTH - 4);
@@ -56,7 +54,7 @@ public class Room {
                 i -= 1;
                 continue;
             }
-            Room.DRAW(WORLD, new Position(x, y), w, l, tile1, tile2);
+            Room.DRAW(WORLD, new Position(x, y), w, l);
         }
     }
 }

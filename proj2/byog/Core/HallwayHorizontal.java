@@ -9,8 +9,6 @@ import java.util.Random;
 import static byog.Core.Game.*;
 
 public class HallwayHorizontal {
-    public static TETile outTile = Game.outTile;
-    public static TETile inTile = Game.inTile;
 
     private static int RandomHallwaysNumber(int min, int max) {
         int returnValue = RANDOM.nextInt(100);

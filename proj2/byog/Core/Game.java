@@ -55,7 +55,7 @@ public class Game {
                 world[x][y] = Tileset.NOTHING;
             }
         }
-        DrawRandomRooms(world, outTile, inTile);
+        DrawRandomRooms(world);
         DrawRandomHallways(world);
         DrawRandomHallwaysVertical(world);
         return world;

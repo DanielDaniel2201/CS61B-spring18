@@ -8,7 +8,6 @@ import java.util.Random;
 
 import static byog.Core.Game.*;
 public class HallwayVertical {
-    public static TETile[][] world = Game.world;
 
     private static int RandomHallwaysNumber(int min, int max, Random RANDOM) {
         int returnValue = RANDOM.nextInt(100);
