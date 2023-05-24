@@ -19,6 +19,7 @@ public class Game {
     public static TETile inTile;
     public static long SEED;
     public static TETile[][] world = new TETile[WIDTH][HEIGHT];
+    public static Random RANDOM = new Random(SEED);
 
 
 
@@ -48,17 +49,15 @@ public class Game {
         outTile = Tileset.WALL;
         inTile = Tileset.FLOOR;
         SEED =Long.parseLong(input);
-        Random RANDOM = new Random(SEED);
-
+        RANDOM = new Random(SEED);
         for (int x = 0; x < WIDTH; x += 1) {
             for (int y = 0; y < HEIGHT; y += 1) {
                 world[x][y] = Tileset.NOTHING;
             }
         }
-
-        DrawRandomRooms(world, new Room(outTile, inTile), RANDOM);
-        DrawRandomHallways(world, RANDOM);
-        DrawRandomHallwaysVertical(world, RANDOM);
+        DrawRandomRooms(world, outTile, inTile);
+        DrawRandomHallways(world);
+        DrawRandomHallwaysVertical(world);
         return world;
     }
 }

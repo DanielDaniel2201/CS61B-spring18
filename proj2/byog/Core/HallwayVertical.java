@@ -8,10 +8,7 @@ import java.util.Random;
 
 import static byog.Core.Game.*;
 public class HallwayVertical {
-    public static TETile outTile = Room.outTile;
-    public static TETile inTile = Room.inTile;
-    public static TETile[][] world = Room.world;
-    public static Random R;
+    public static TETile[][] world = Game.world;
 
     private static int RandomHallwaysNumber(int min, int max, Random RANDOM) {
         int returnValue = RANDOM.nextInt(100);
@@ -21,8 +18,7 @@ public class HallwayVertical {
         return returnValue;
     }
 
-    public static void DrawRandomHallwaysVertical(TETile[][] world, Random RANDOM) {
-        R = RANDOM;
+    public static void DrawRandomHallwaysVertical(TETile[][] world) {
         int num = RandomHallwaysNumber(8, 15, RANDOM);
         for (int i = 0; i < num; i += 1) {
             DrawRandomHallway(world);
@@ -45,8 +41,8 @@ public class HallwayVertical {
 
     //returns a position of special point 1 on an appropriate place of a room edge and on its way there will be a valid special point 2
     private static Position Sp1Pos() {
-        int x = R.nextInt(1, WIDTH - 2);
-        int y = R.nextInt(HEIGHT - 2);
+        int x = RANDOM.nextInt(1, WIDTH - 2);
+        int y = RANDOM.nextInt(HEIGHT - 2);
         return Purify1(x, y);
     }
 
@@ -80,7 +76,7 @@ public class HallwayVertical {
         if (var1 && var2 && var3 && var4 && var5) {
             return new Position(xInput, yInput);
         } else {
-            return Purify1(R.nextInt(1, WIDTH - 2), R.nextInt(HEIGHT - 2));
+            return Purify1(RANDOM.nextInt(1, WIDTH - 2), RANDOM.nextInt(HEIGHT - 2));
         }
     }
 

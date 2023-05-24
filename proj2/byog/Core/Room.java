@@ -1,6 +1,8 @@
 package byog.Core;
 
 import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
+
 import java.util.Objects;
 import java.util.Random;
 
@@ -10,10 +12,6 @@ public class Room {
     public static TETile[][] world = Game.world;
     public static TETile outTile;
     public static TETile inTile;
-    public Room(TETile tile1, TETile tile2) {
-        outTile = tile1;
-        inTile = tile2;
-    }
 
     public static void DRAW(TETile[][] world, Position Pos, int width, int height, TETile tile1, TETile tile2) {
          Field.DRAW(world, Pos, width, height, tile1);
@@ -45,7 +43,7 @@ public class Room {
     }
 
     //a method to fill the 2d world with random number of rooms of random width and length
-    public static void DrawRandomRooms(TETile[][] WORLD, Room room, Random RANDOM) {
+    public static void DrawRandomRooms(TETile[][] WORLD, TETile tile1, TETile tile2) {
         int num = RandomRoomsNumber(15, 20, RANDOM);
         for (int i = 0; i < num; i += 1) {
             int x = RANDOM.nextInt(WIDTH - 4);
@@ -58,7 +56,7 @@ public class Room {
                 i -= 1;
                 continue;
             }
-            Room.DRAW(WORLD, new Position(x, y), w, l, room.outTile, room.inTile);
+            Room.DRAW(WORLD, new Position(x, y), w, l, tile1, tile2);
         }
     }
 }
