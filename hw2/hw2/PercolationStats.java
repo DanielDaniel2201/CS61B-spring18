@@ -20,10 +20,10 @@ public class PercolationStats {
 
             while (!perc.percolates()) {   //make sure open a valid site, which is blocked
                 int row, col;
-                do{
+                do {
                     row = StdRandom.uniform(0, N);
                     col = StdRandom.uniform(0, N);
-                }while (perc.isOpen(row, col));
+                } while (perc.isOpen(row, col));
                 perc.open(row, col);
             }
             int numOpen = perc.numberOfOpenSites();
