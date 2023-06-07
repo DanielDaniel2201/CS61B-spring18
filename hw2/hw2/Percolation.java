@@ -3,12 +3,12 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    static boolean[][] world;
-    static int worldBreadth;
-    static WeightedQuickUnionUF UF;
-    int numOpen = 0;
-    static int topVirtual1;
-    static int topVirtual2;
+    boolean[][] world;
+    private int worldBreadth;
+    private WeightedQuickUnionUF UF;
+    private int numOpen = 0;
+    private int topVirtual1;
+    private int topVirtual2;
 
     public Percolation(int N) {     // create N-by-N grid, with all sites initially blocked
         if (N <= 0) {
@@ -22,7 +22,8 @@ public class Percolation {
     }
     public void open(int row, int col) {      // open the site (row, col) if it is not open already
         if (row < 0 || col < 0 || row > worldBreadth - 1 || col > worldBreadth - 1) {
-            throw new IndexOutOfBoundsException("the index should be in the range from 0 to N - 1, inclusively");
+            throw new IndexOutOfBoundsException(
+                    "the index should be in the range from 0 to N - 1, inclusively");
         }
 
         if (!world[row][col]) {
@@ -49,17 +50,26 @@ public class Percolation {
 
     }
     public boolean isOpen(int row, int col) {    // is the site (row, col) open?
+        if (row < 0 || col < 0
+                || row > worldBreadth - 1 || col > worldBreadth - 1) {
+            throw new IndexOutOfBoundsException(
+                    "the index should be in the range from 0 to N - 1, inclusively");
+        }
         return world[row][col];
     }
 
     public boolean isFull(int row, int col) {  // is the site (row, col) full?
+        if (row < 0 || col < 0 || row > worldBreadth - 1 || col > worldBreadth - 1) {
+            throw new IndexOutOfBoundsException(
+                    "the index should be in the range from 0 to N - 1, inclusively");
+        }
         isPercolateHelper();
         int tmpIndex = xyTo1D(row, col);
         return UF.connected(tmpIndex, topVirtual1) && isOpen(row, col);
     }
 
     public int numberOfOpenSites() {          // number of open sites
-       return numOpen;
+        return numOpen;
     }
 
     public boolean percolates() {              // does the system percolate?
@@ -68,11 +78,11 @@ public class Percolation {
     }
 //    public static void main(String[] args)   // use for unit testing (not required)
 
-    private static int xyTo1D(int x, int y) {   // convert 2d coordinates to 1d index
+    private int xyTo1D(int x, int y) {   // convert 2d coordinates to 1d index
         return x * worldBreadth + y;
     }
 
-    private static void isPercolateHelper() {
+    private void isPercolateHelper() {
         for (int i = 0; i < worldBreadth; i += 1) {
             int tmpIndex = xyTo1D(0, i);
             UF.union(topVirtual1, tmpIndex);
@@ -82,5 +92,8 @@ public class Percolation {
             int tmpIndex = xyTo1D(worldBreadth - 1, i);
             UF.union(topVirtual2, tmpIndex);
         }
+    }
+
+    public static void main(String[] args) {
     }
 }
