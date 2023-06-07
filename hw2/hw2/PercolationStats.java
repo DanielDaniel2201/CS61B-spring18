@@ -15,23 +15,20 @@ public class PercolationStats {
         repeatingTime = T;
         soFarEstimates = new double[T];
 
-        int counter = 0;
-        while (counter < repeatingTime) {
+        for (int i = 0; i < repeatingTime; i += 1) {
             Percolation perc = pf.make(N);   //make a new world
 
             while (!perc.percolates()) {   //make sure open a valid site, which is blocked
-                int row = StdRandom.uniform(0, N);
-                int col = StdRandom.uniform(0, N);
-                while (perc.isOpen(row, col)) {
+                int row, col;
+                do{
                     row = StdRandom.uniform(0, N);
                     col = StdRandom.uniform(0, N);
-                }
+                }while (perc.isOpen(row, col));
                 perc.open(row, col);
             }
             int numOpen = perc.numberOfOpenSites();
             double estimate = (double) numOpen / N * N;
-            soFarEstimates[counter] = estimate;
-            counter += 1;
+            soFarEstimates[i] = estimate;
         }
     }
 
