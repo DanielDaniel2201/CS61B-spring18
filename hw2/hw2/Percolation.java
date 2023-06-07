@@ -3,7 +3,7 @@ package hw2;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
-    boolean[][] world;
+    private boolean[][] world;
     private int worldBreadth;
     private WeightedQuickUnionUF UF;
     private int numOpen = 0;

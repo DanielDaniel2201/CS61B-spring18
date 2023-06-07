@@ -4,8 +4,8 @@ import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
-    int repeatingTime;
-    double[] soFarEstimates;
+    private int repeatingTime;
+    private double[] soFarEstimates;
     public PercolationStats(int N, int T, PercolationFactory pf) {
         // perform T independent experiments on an N-by-N grid
         if (N <= 0 || T <= 0) {
@@ -13,7 +13,7 @@ public class PercolationStats {
         }
 
         repeatingTime = T;
-        soFarEstimates = new double[N];
+        soFarEstimates = new double[T];
 
         int counter = 0;
         while (counter < repeatingTime) {
