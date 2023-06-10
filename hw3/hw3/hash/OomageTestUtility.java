@@ -1,5 +1,6 @@
 package hw3.hash;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class OomageTestUtility {
@@ -12,6 +13,17 @@ public class OomageTestUtility {
          * and ensure that no bucket has fewer than N / 50
          * Oomages and no bucket has more than N / 2.5 Oomages.
          */
-        return false;
+        int N = oomages.size();
+        int[] buckets = new int[N];
+        for (Oomage o: oomages) {
+            int numBucket = (o.hashCode() & 0x7FFFFFFF) % M;
+            buckets[numBucket] += 1;
+        }
+        for (int num: buckets) {
+            if (num < N / 50 || num > N / 2.5) {
+                return false;
+            }
+        }
+        return true;
     }
 }
