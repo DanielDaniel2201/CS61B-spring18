@@ -7,10 +7,10 @@ import java.util.List;
 
 public class Solver {
 
-    MinPQ<SearchNode> MPQSearchNodes = new MinPQ<>();
-    int ultimateMoves = -1;
-    List<WorldState> ultimateSequence = new ArrayList<>();
-    List<WorldState> ultimateSequenceHelper = new ArrayList<>();
+    private MinPQ<SearchNode> mPQSearchNodes = new MinPQ<>();
+    private int ultimateMoves = -1;
+    private List<WorldState> ultimateSequence = new ArrayList<>();
+    private List<WorldState> ultimateSequenceHelper = new ArrayList<>();
 
     /**Constructor which solves the puzzle, computing
      everything necessary for moves() and solution() to
@@ -20,26 +20,28 @@ public class Solver {
     public Solver(WorldState initial) {
         //construct the smallest SearchNode and insert it into the MinPQ;
         SearchNode firstNode = new SearchNode(0, null, initial);
-        MPQSearchNodes.insert(firstNode);
+        mPQSearchNodes.insert(firstNode);
 
         //check if the first item of MinPQ is the goal;
-        while (!MPQSearchNodes.min().WorldState.isGoal()) {
+        while (!mPQSearchNodes.min().worldState.isGoal()) {
 
             // get the smallest SearchNode and put it into the ultimateSequence;
-            SearchNode smallesSearchNode = MPQSearchNodes.delMin();
+            SearchNode smallesSearchNode = mPQSearchNodes.delMin();
 
-            //put every one of its neighbor into the MPQSearchNodes except its "grandparent";
-            for (WorldState ws : smallesSearchNode.WorldState.neighbors()) {
-                if (smallesSearchNode.prevSearchNode == null || !ws.equals(smallesSearchNode.prevSearchNode.WorldState)) {
-                    MPQSearchNodes.insert(new SearchNode(smallesSearchNode.moveSoFar + 1, smallesSearchNode, ws));
+            //put every one of its neighbor into the mPQSearchNodes except its "grandparent";
+            for (WorldState ws : smallesSearchNode.worldState.neighbors()) {
+                if (smallesSearchNode.prevSearchNode == null ||
+                        !ws.equals(smallesSearchNode.prevSearchNode.worldState)) {
+                    mPQSearchNodes.insert(
+                            new SearchNode(smallesSearchNode.moveSoFar + 1, smallesSearchNode, ws));
                 }
             }
         }
 
-        SearchNode sn = MPQSearchNodes.delMin();
+        SearchNode sn = mPQSearchNodes.delMin();
         while (sn != null) {
             ultimateMoves += 1;
-            ultimateSequenceHelper.add(sn.WorldState);
+            ultimateSequenceHelper.add(sn.worldState);
             sn = sn.prevSearchNode;
         }
     }
@@ -59,19 +61,19 @@ public class Solver {
         return ultimateSequence;
     }
 
-    private class SearchNode implements Comparable<SearchNode>{
+    private class SearchNode implements Comparable<SearchNode> {
         private int moveSoFar;
         private SearchNode prevSearchNode;
-        private WorldState WorldState;
+        private WorldState worldState;
 
-        public SearchNode(int m, SearchNode s, WorldState ws) {
+        SearchNode(int m, SearchNode s, WorldState ws) {
             moveSoFar = m;
             prevSearchNode = s;
-            WorldState = ws;
+            worldState = ws;
         }
 
         public WorldState getWorldState() {
-            return WorldState;
+            return worldState;
         }
 
         public SearchNode getPrevSearchNode() {
@@ -80,7 +82,8 @@ public class Solver {
 
         @Override
         public int compareTo(SearchNode o) {
-            return this.moveSoFar + this.WorldState.estimatedDistanceToGoal() - o.moveSoFar - o.WorldState.estimatedDistanceToGoal();
+            return this.moveSoFar + this.worldState.estimatedDistanceToGoal() -
+                    o.moveSoFar - o.worldState.estimatedDistanceToGoal();
         }
     }
 }

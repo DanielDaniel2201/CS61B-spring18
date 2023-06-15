@@ -2,8 +2,8 @@ package hw4.puzzle;
 
 import edu.princeton.cs.algs4.Queue;
 public class Board implements WorldState {
-    int size;
-    int[][] tiles;
+    private int size;
+    private int[][] tiles;
     private static final int BLANK = 0;
 
     /**Constructs a board from an N-by-N array of tiles where
@@ -72,13 +72,14 @@ public class Board implements WorldState {
 
     public int hamming() {
         int counter = 0;
-        for (int i = 1; i <= size * size - 1; i += 1) {
-            if (tiles[i / size][(i - 1) % size] != i) {
-                counter += 1;
+        for (int i = 0; i < size; i += 1) {
+            for (int j = 0; j < size; j += 1) {
+                if (tiles[i][j] == 0) {
+                    continue;
+                } else if (tiles[i][j] != i * size + j + 1) {
+                    counter += 1;
+                }
             }
-        }
-        if (tileAt(size - 1, size - 1) != 0) {
-            counter += 1;
         }
         return counter;
     }
@@ -110,7 +111,8 @@ public class Board implements WorldState {
     /**Returns true if this board's tile values are the same
      position as y's*/
     public boolean equals(Object y) {
-        if (y.getClass() != this.getClass()) {
+        if (y == this) return true;
+        if (y == null || this.getClass() != y.getClass()) {
             return false;
         }
         Board that = (Board) y;
@@ -124,7 +126,9 @@ public class Board implements WorldState {
         return true;
     }
 
-
+    public int hashCode() {
+        return super.hashCode();
+    }
     /** Returns the string representation of the board.
       * Uncomment this method. */
     public String toString() {
@@ -133,7 +137,7 @@ public class Board implements WorldState {
         s.append(N + "\n");
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                s.append(String.format("%2d ", tileAt(i,j)));
+                s.append(String.format("%2d ", tileAt(i, j)));
             }
             s.append("\n");
         }
