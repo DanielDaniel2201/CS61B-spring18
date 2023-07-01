@@ -13,6 +13,7 @@ public class MazeAStarPath extends MazeExplorer {
     private int targetX;
     private int targetY;
     private MinPQ<Node> fringe = new MinPQ<>();
+    int totalMoves = 0;
 
     public MazeAStarPath(Maze m, int sourceX, int sourceY, int targetX, int targetY) {
         super(m);
@@ -41,33 +42,35 @@ public class MazeAStarPath extends MazeExplorer {
     /** Performs an A star search from vertex s. */
     private void astar(int s) {
         // TODO
-        Node firstV = new Node(s, null);
+        Node firstV = new Node(s, null, 0);
         fringe.insert(firstV);
 
         while (fringe.min().oneDCoor != t) {
-
             Node smallestV = fringe.delMin();
-            marked[smallestV.oneDCoor] = true;
-
-            if (smallestV == firstV) {
-                edgeTo[smallestV.oneDCoor] = 0;
-                distTo[smallestV.oneDCoor] = 0;
-                announce();
-            } else {
-                edgeTo[smallestV.oneDCoor] = smallestV.prevNode.oneDCoor;
-                distTo[smallestV.oneDCoor] = distTo[smallestV.prevNode.oneDCoor] + 1;
-                announce();
-            }
-
             for (int v: maze.adj(smallestV.oneDCoor)) {
-                if (!marked[v]) {
-                    fringe.insert(new Node(v, smallestV));
+                if (smallestV.prevNode == null || v != smallestV.prevNode.oneDCoor) {
+                    distTo[v] = smallestV.moveSoFar + 1;
+                    fringe.insert(new Node(v, smallestV, smallestV.moveSoFar + 1));
                 }
             }
         }
+
         Node lastNode = fringe.min();
-        edgeTo[lastNode.oneDCoor] = lastNode.prevNode.oneDCoor;
-        distTo[lastNode.oneDCoor] = distTo[lastNode.prevNode.oneDCoor] + 1;
+        while (lastNode != null) {
+            totalMoves += 1;
+            lastNode = lastNode.prevNode;
+        }
+
+        Node lastN = fringe.min();
+        while (lastN.prevNode != null && totalMoves >= 0) {
+            marked[lastN.oneDCoor] = true;
+            edgeTo[lastN.oneDCoor] = lastN.prevNode.oneDCoor;
+            lastN = lastN.prevNode;
+            totalMoves -= 1;
+            announce();
+        }
+
+        marked[s] = true;
         announce();
     }
 
@@ -79,9 +82,11 @@ public class MazeAStarPath extends MazeExplorer {
     private class Node implements Comparable<Node>{
         private int oneDCoor;
         private Node prevNode;
-        Node(int d, Node prev) {
+        private int moveSoFar;
+        Node(int d, Node prev, int moves) {
             oneDCoor = d;
             prevNode = prev;
+            moveSoFar = moves;
         }
 
         @Override
