@@ -67,6 +67,63 @@ public class CountingSort {
      */
     public static int[] betterCountingSort(int[] arr) {
         // TODO make counting sort work with arrays containing negative numbers.
-        return null;
+        if (checkNegative(arr)) {
+            return naiveCountingSort(arr);
+        }
+
+        int negativeCount = negativeCount(arr);
+        int[] fakeNegativeArr = new int[negativeCount];
+        int[] nonNegativeArr = new int[arr.length - negativeCount];
+
+        int counter1 = 0;
+        int counter2 = 0;
+        for (int i : arr) {
+            if (i < 0) {
+                fakeNegativeArr[counter1] = -i;
+                counter1 += 1;
+            } else {
+                nonNegativeArr[counter2] = i;
+                counter2 += 1;
+            }
+        }
+
+        int[] sortedNonNegative = naiveCountingSort(nonNegativeArr);
+        int[] fakeSortedNegative = naiveCountingSort(fakeNegativeArr);
+
+        int[] sortedNegative = new int[negativeCount];
+        for (int i = negativeCount - 1; i >= 0; i -= 1) {
+            sortedNegative[negativeCount - 1 - i] = -fakeSortedNegative[i];
+        }
+
+        int length = sortedNonNegative.length + sortedNegative.length;
+        int[] sorted = new int[length];
+
+        for (int i = 0; i < length; i += 1) {
+            if (i < sortedNegative.length) {
+                sorted[i] = sortedNegative[i];
+            } else {
+                sorted[i] = sortedNonNegative[i - sortedNegative.length];
+            }
+        }
+        return sorted;
+    }
+
+    private static int negativeCount(int[] arr) {
+        int negativeCount = 0;
+        for (int i : arr) {
+            if (i < 0) {
+                negativeCount += 1;
+            }
+        }
+        return negativeCount;
+    }
+
+    private static boolean checkNegative(int[] arr) {
+        for (int i : arr) {
+            if (i < 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
