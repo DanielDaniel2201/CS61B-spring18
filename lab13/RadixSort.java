@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /**
  * Class for doing Radix sort
  *
@@ -18,7 +16,6 @@ public class RadixSort {
      * @return String[] the sorted array
      */
     public static String[] sort(String[] asciis) {
-        // TODO: Implement LSD Sort
         int singleStringLength = greatestLength(asciis);
         String[] sorted = new String[asciis.length];
         System.arraycopy(asciis, 0, sorted, 0, asciis.length);

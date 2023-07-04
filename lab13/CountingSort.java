@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Class with 2 ways of doing Counting sort, one naive way and one "better" way
  *
@@ -54,7 +56,7 @@ public class CountingSort {
         }
 
         // return the sorted array
-        return sorted;
+        return sorted2;
     }
 
     /**
@@ -69,6 +71,16 @@ public class CountingSort {
         // TODO make counting sort work with arrays containing negative numbers.
         if (checkNegative(arr)) {
             return naiveCountingSort(arr);
+        } else if (checkAllNegative(arr)) {
+            for (int i = 0; i < arr.length; i += 1) {
+                arr[i] = -arr[i];
+            }
+            int[] fake = naiveCountingSort(arr);
+            int[] sorted = new int[fake.length];
+            for (int i = fake.length - 1; i >= 0; i -= 1) {
+                sorted[fake.length - 1 - i] = -fake[i];
+            }
+            return sorted;
         }
 
         int negativeCount = negativeCount(arr);
@@ -125,5 +137,24 @@ public class CountingSort {
             }
         }
         return true;
+    }
+
+    private static boolean checkAllNegative(int[] arr) {
+        for (int i : arr) {
+            if (i >= 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static void main(String[] args) {
+        int[] test = {-1, -2, -3, -5, -4, -9, -66, -43};
+        System.out.println(Arrays.toString(betterCountingSort(test)));
+        int[] test2 = {1, 2, 5, 23, 646, 12, 2};
+        System.out.println(Arrays.toString(betterCountingSort(test2)));
+        int[] test3 = {1, 2, -5, -23, -646, 12, 2};
+        System.out.println(Arrays.toString(betterCountingSort(test3)));
+
     }
 }
