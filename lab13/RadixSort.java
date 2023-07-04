@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Class for doing Radix sort
  *
@@ -17,7 +19,15 @@ public class RadixSort {
      */
     public static String[] sort(String[] asciis) {
         // TODO: Implement LSD Sort
-        return null;
+        int singleStringLength = greatestLength(asciis);
+        String[] sorted = new String[asciis.length];
+        System.arraycopy(asciis, 0, sorted, 0, asciis.length);
+
+        for (int i = singleStringLength; i >= 0; i -= 1) {
+            sortHelperLSD(sorted, i);
+        }
+
+        return sorted;
     }
 
     /**
@@ -28,7 +38,44 @@ public class RadixSort {
      */
     private static void sortHelperLSD(String[] asciis, int index) {
         // Optional LSD helper method for required LSD radix sort
-        return;
+        int[] alphabet = new int[256];
+        String[] sortedTmp = new String[asciis.length];
+
+        for (String str : asciis) {
+            char charAtIndex = charAtString(str, index);
+            alphabet[charAtIndex] += 1;
+        }
+
+        for (int i = 1; i < 256; i += 1) {
+            alphabet[i] = alphabet[i] + alphabet[i - 1];
+        }
+
+        for (int i = asciis.length - 1; i >= 0; i -= 1) {
+            String str = asciis[i];
+            char c = charAtString(str, index);
+            int a = alphabet[c];
+            sortedTmp[a - 1] = str;
+            alphabet[c] -= 1;
+        }
+        System.arraycopy(sortedTmp, 0, asciis, 0, asciis.length);
+    }
+
+    private static int greatestLength(String[] arr) {
+        int length = arr[0].length();
+        for (String str : arr) {
+            if (str.length() > length) {
+                length = str.length();
+            }
+        }
+        return length;
+    }
+
+    private static char charAtString(String str, int index) {
+        if (str.length() >= index + 1) {
+            return str.charAt(index);
+        } else {
+            return '_';
+        }
     }
 
     /**
