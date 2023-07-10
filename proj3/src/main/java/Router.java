@@ -1,5 +1,4 @@
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,9 +22,45 @@ public class Router {
      * @param destlat The latitude of the destination location.
      * @return A list of node id's in the order visited on the shortest path.
      */
+
+
     public static List<Long> shortestPath(GraphDB g, double stlon, double stlat,
                                           double destlon, double destlat) {
-        return null; // FIXME
+        List<Long> route = new ArrayList<>();
+        HashMap<Long, Double> distTo = new HashMap<>();
+        HashMap<Long, Long> edgeTo = new HashMap<>();
+        long stID = g.closest(stlon, stlat);
+        distTo.put(stID, (double) 0);
+        edgeTo.put(stID, (long) 0);
+        long destID = g.closest(destlon, destlat);
+        PriorityQueue<Long> fringe = new PriorityQueue<Long>(new Comparator<Long>() {
+            @Override
+            public int compare(Long o1, Long o2) {
+                double x = distTo.get(o1) + g.distance(o1, destID);
+                double y = distTo.get(o2) + g.distance(o2, destID);
+                return Double.compare(x, y);
+            }
+        });
+
+        fringe.add(stID);
+        while (!fringe.isEmpty()) {
+            long smallest = fringe.poll();
+            if (smallest == destID) {
+                break;
+            }
+            for (Long id : g.adjacent(smallest)) {
+                double dist = distTo.get(smallest) + g.distance(smallest, id);
+                if (dist< distTo.get(id)) {
+                    distTo.put(id, dist);
+                    edgeTo.put(id, smallest);
+                    fringe.add(id);
+                }
+            }
+        }
+        for (long id = destID; id != (long)0; id = edgeTo.get(id)) {
+            route.add(0, id);
+        }
+        return route;
     }
 
     /**
@@ -33,11 +68,12 @@ public class Router {
      * @param g The graph to use.
      * @param route The route to translate into directions. Each element
      *              corresponds to a node from the graph in the route.
-     * @return A list of NavigatiionDirection objects corresponding to the input
+     * @return A list of NavigationDirection objects corresponding to the input
      * route.
      */
     public static List<NavigationDirection> routeDirections(GraphDB g, List<Long> route) {
-        return null; // FIXME
+
+        return null;
     }
 
 
@@ -65,7 +101,7 @@ public class Router {
 
         /** Default name for an unknown way. */
         public static final String UNKNOWN_ROAD = "unknown road";
-        
+
         /** Static initializer. */
         static {
             DIRECTIONS[START] = "Start";

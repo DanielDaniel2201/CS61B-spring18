@@ -143,11 +143,6 @@ public class Rasterer {
         int lrTileX = (int)Math.floor(mapLeftToBoxRight / singleTileSideX);
         int lrTileY = (int)Math.floor(mapUpToBoxDown / singleTileSideY);
 
-        System.out.println(ulTileX);
-        System.out.println(ulTileY);
-        System.out.println(lrTileX);
-        System.out.println(lrTileY);
-
         int stringWidth = Math.abs(lrTileX - ulTileX) + 1;
         int stringHeight = Math.abs(ulTileY - lrTileY) + 1;
         String[][] StringArray = new String[stringHeight][stringWidth];
