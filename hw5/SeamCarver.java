@@ -6,7 +6,7 @@ import edu.princeton.cs.algs4.Picture;
 
 public class SeamCarver {
     Picture picture;
-    Picture originalPicture;
+    final Picture originalPicture;
     double[][] allMinCostAt;
     int[][] edgeTo;
     public SeamCarver(Picture picture) {
@@ -62,6 +62,7 @@ public class SeamCarver {
 
     // sequence of indices for vertical seam
     public int[] findHorizontalSeam() {
+        picture = originalPicture;
         Picture tiltedPicture = tiltPicture(picture);
         picture = tiltedPicture;
         allMinCostAt = new double[height()][width()];
